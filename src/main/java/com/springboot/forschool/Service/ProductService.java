@@ -3,17 +3,51 @@ package com.springboot.forschool.Service;
 import com.springboot.forschool.Model.Product;
 import com.springboot.forschool.Repositorys.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProductService {
-
-    @Autowired
     private ProductRepository repo;
 
-    public List<Product> productList()
+    @Autowired
+    public ProductService(ProductRepository repo)
+    {
+        this.repo = repo;
+    }
+
+    public int addProduct(Product product)
+    {
+    return repo.insertProduct(product);
+    }
+
+    public List<Product> getAllProduct()
+    {
+    return repo.selectAllProduct();
+    }
+
+    public Optional<Product> getPersonById(UUID id)
+    {
+    return repo.selectProductById();
+    }
+
+    public int deleteProduct (UUID id)
+    {
+        return repo.deletePersonById(id);
+    }
+    /*
+    public int updatePerson(UUID id, Product newProduct)
+    {
+        return repo.updatePersonById(id, newProduct);
+    }
+
+    */
+
+   public List<Product> productList()
     {
         return repo.findAll();
     }
@@ -32,4 +66,5 @@ public class ProductService {
     {
         repo.deleteById(id);
     }
+
 }
